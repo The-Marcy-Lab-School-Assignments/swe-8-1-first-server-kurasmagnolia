@@ -6,6 +6,18 @@ const express = require('express');
 // invoking express to create our app
 const app = express();
 
+// The path module is useful for constructing relative filepaths
+const path = require('path');
+
+// the filepath is to the entire assets folder
+const filepath = path.join(__dirname, '../app/dist');
+
+// generate middleware using the filepath
+const serveStatic = express.static(filepath);
+
+// Register the serveStatic middleware before the remaining controllers
+app.use(serveStatic);
+
 // middleware function for logging route requests
 const logRoutes = (req, res, next) => {
   const time = new Date().toLocaleString();
