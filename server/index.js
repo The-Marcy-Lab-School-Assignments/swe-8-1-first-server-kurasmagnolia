@@ -6,6 +6,15 @@ const express = require('express');
 // invoking express to create our app
 const app = express();
 
+// middleware function for logging route requests
+const logRoutes = (req, res, next) => {
+  const time = new Date().toLocaleString();
+  console.log(`${req.method}: ${req.originalUrl} - ${time}`);
+  next(); // passes the request to the next middleware/controller
+};
+// register the logRoutes middleware globally to log all requests
+app.use(logRoutes);
+
 // controllers
 const servePicture = (req, res, next) => {
   const picture = {
